@@ -38,6 +38,7 @@ var CastleState= {
     layer = map.createLayer('base');
     layer.resizeWorld();
     layer.wrap = true;
+     
     
       layer2 = map.createLayer('caminos');
     layer2.resizeWorld();
@@ -46,10 +47,14 @@ var CastleState= {
       layer3 = map.createLayer('muros');
     layer3.resizeWorld();
     layer3.wrap = true;
+    map.setCollision([9086,9019,9085,6327,6328,6359,6360,73,25,55,50,58,56,71,74,88,104,87,90,106,188,57,103,24,41,19,18,81,6325,6326,6357,6358,6389,6390,239,240,255,256,234
+],true,'muros');
     
       layer4 = map.createLayer('orillas');
     layer4.resizeWorld();
     layer4.wrap = true;
+    map.setCollision([7477,7478,7479,7509,7510,7511,7541,7542,7543,2,10,7,23,9,8,26,73,39,40,41,42,55,56,57,58,87,140,141,90,50,24,65,89,103,156,157,185,142,143,144,126,127,128,185],true,'orillas');
+    
     
       layer5 = map.createLayer('suelo del castillo');
     layer5.resizeWorld();
@@ -82,11 +87,12 @@ var CastleState= {
     
    
            
-  
+  layer3.debug=true;
+  layer4.debug=true;
    
       
 
-   sprite = game.add.sprite(15, 15, 'phaser');
+   sprite = game.add.sprite(400, 3000, 'phaser');
     
     sprite.animations.add('arriba',[0,1,2,3,4,5,6,7,8],10,true);
     sprite.animations.add('left',[9,10,11,12,13,14,15,16,17],10,true);
@@ -124,7 +130,8 @@ sprite.body.collideWorldBounds=true;
     
     
     update: function(){
-        
+        game.physics.arcade.collide(sprite, layer3);
+        game.physics.arcade.collide(sprite, layer4);
          
 
     sprite.body.velocity.x = 0;
