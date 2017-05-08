@@ -12,6 +12,7 @@ var banderaMusica=false;
 var banderaPausa=false;
 var banderaInventario=false;
 var contadorFps=0;
+var balls
 
 var caballeroState= {
     
@@ -21,6 +22,8 @@ var caballeroState= {
     },
     
     create: function(){
+        
+   
     map = game.add.tilemap('map');
     map.addTilesetImage('terrain_atlas','tiles');
     map.addTilesetImage('ship','barco');
@@ -147,6 +150,19 @@ sprite.body.collideWorldBounds=true;
     d= game.input.keyboard.addKey(Phaser.Keyboard.D);
     w= game.input.keyboard.addKey(Phaser.Keyboard.W);
     e= game.input.keyboard.addKey(Phaser.Keyboard.E);    
+    
+    
+     
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    balls = game.add.group();
+    balls.enableBody = true;
+
+    for (var i = 0; i < 50; i++)
+    {
+        var ball = balls.create(game.world.randomX, game.world.randomY, 'ball');
+    }
+        
         
     },
     
@@ -154,6 +170,9 @@ sprite.body.collideWorldBounds=true;
     
     update: function(){
         
+       
+       
+       
             game.physics.arcade.collide(sprite, layer);
             game.physics.arcade.collide(sprite, layer4);
             game.physics.arcade.collide(sprite, layer5);
@@ -273,7 +292,21 @@ sprite.body.collideWorldBounds=true;
     };
         //FIN DE PAUSA
             
-         
+          if (w.isDown || a.isDown || s.isDown || d.isDown)
+    {
+        //  First is the callback
+        //  Second is the context in which the callback runs, in this case game.physics.arcade
+        //  Third is the parameter the callback expects - it is always sent the Group child as the first parameter
+        balls.forEach(game.physics.arcade.moveToPointer(sprite.velocity.x , sprite.velocity.y), game.physics.arcade, true, 200);
+    }
+    else
+    {
+        balls.setAll('body.velocity.x', 100);
+        balls.setAll('body.velocity.y', 100);
+    }
+    
+    
+    
     }
     
     
